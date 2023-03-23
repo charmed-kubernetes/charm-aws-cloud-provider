@@ -1,12 +1,10 @@
 # Copyright 2022 Canonical Ltd.
 # See LICENSE file for licensing details.
-import asyncio
 import logging
 import shlex
 from pathlib import Path
 
 import pytest
-from lightkube.codecs import from_dict
 from lightkube.resources.core_v1 import Node
 
 log = logging.getLogger(__name__)
