@@ -10,7 +10,7 @@ applications:
 relations:
 - ["aws-cloud-provider:certificates", "easyrsa:client"]
 - ["aws-cloud-provider:kube-control", "kubernetes-control-plane"]
-- ["aws-cloud-provider:aws-integration", "aws-integrator:clients"]
+- ["aws-cloud-provider:aws-integration", "aws-integrator:aws"]
 - ["aws-cloud-provider:external-cloud-provider", "kubernetes-control-plane"]
 - ["aws-integrator:aws", "kubernetes-control-plane"]
 - ["aws-integrator:aws", "kubernetes-worker"]

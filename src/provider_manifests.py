@@ -43,9 +43,9 @@ class UpdateControllerDaemonSet(Patch):
         log.info("Adding provider tolerations from control-plane")
 
         args = {
-            "cluster-provider": "aws",
+            "cloud-provider": "aws",
             "v": 2,
-            "cluster-tag": self.manifests.config.get("cluster_tag"),
+            "cluster-name": self.manifests.config.get("cluster-name"),
         }
         args.update(**self.manifests.config.get("controller-extra-args"))
         containers = obj.spec.template.spec.containers
@@ -80,7 +80,7 @@ class AWSProviderManifests(Manifests):
             config["control-node-selector"] = {
                 label.key: label.value for label in self.kube_control.get_controller_labels()
             } or {"juju-application": self.kube_control.relation.app.name}
-            config["cluster-tag"] = self.kube_control.get_cluster_tag()
+            config["cluster-name"] = self.kube_control.get_cluster_tag()
 
         config.update(**self.charm_config.available_data)
 
@@ -98,7 +98,7 @@ class AWSProviderManifests(Manifests):
 
     def evaluate(self) -> Optional[str]:
         """Determine if manifest_config can be applied to manifests."""
-        props = ["control-node-selector", "cluster-tag"]
+        props = ["control-node-selector", "cluster-name"]
         for prop in props:
             value = self.config.get(prop)
             if not value:
