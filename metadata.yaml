@@ -1,0 +1,30 @@
+# Copyright 2022 Canonical, Ltd.
+# See LICENSE file for licensing details.
+name: aws-cloud-provider
+display-name: AWS Cloud Provider
+summary: Runs the AWS Cloud Provider in the cluster.
+source: https://github.com/charmed-kubernetes/aws-cloud-provider
+issues: https://bugs.launchpad.net/charm-aws-cloud-provider
+docs: https://discourse.charmhub.io/t/aws-cloud-provider-docs-index/????
+description: >-
+  The aws cloud provider provides the Kubernetes cluster access to
+  native resources from aws such as load-balancers
+subordinate: true
+tags:
+  - kubernetes
+  - cloud-provider
+  - aws
+provides:
+  external-cloud-provider:
+    interface: external_cloud_provider
+    limit: 1
+requires:
+  aws-integration:
+    interface: aws-integration
+    scope: container
+    limit: 1
+  kube-control:
+    interface: kube-control
+    limit: 1
+  certificates:
+    interface: tls-certificates
