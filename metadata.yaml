@@ -10,6 +10,9 @@ description: >-
   The aws cloud provider provides the Kubernetes cluster access to
   native resources from aws such as load-balancers
 subordinate: true
+series:
+  - jammy
+  - focal
 tags:
   - kubernetes
   - cloud-provider

@@ -3,8 +3,8 @@
 #
 # Learn more about testing at: https://juju.is/docs/sdk/testing
 
-from ipaddress import ip_network
 import unittest.mock as mock
+from ipaddress import ip_network
 from pathlib import Path
 
 import ops.testing
