@@ -3,6 +3,7 @@
 #
 # Learn more about testing at: https://juju.is/docs/sdk/testing
 
+from ipaddress import ip_network
 import unittest.mock as mock
 from pathlib import Path
 
@@ -51,6 +52,7 @@ def kube_control():
         kube_control.get_controller_taints.return_value = []
         kube_control.get_controller_labels.return_value = []
         kube_control.get_cluster_tag.return_value = "kubernetes-4ypskxahbu3rnfgsds3pksvwe3uh0lxt"
+        kube_control.get_cluster_cidr.return_value = ip_network("192.168.0.0/16")
         kube_control.relation.app.name = "kubernetes-control-plane"
         kube_control.relation.units = [f"kubernetes-control-plane/{_}" for _ in range(2)]
         yield kube_control

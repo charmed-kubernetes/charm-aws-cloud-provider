@@ -46,6 +46,7 @@ class UpdateControllerDaemonSet(Patch):
             "cloud-provider": "aws",
             "v": 2,
             "cluster-name": self.manifests.config.get("cluster-name"),
+            "cluster-cidr": self.manifests.config.get("cluster-cidr"),
         }
         args.update(**self.manifests.config.get("controller-extra-args"))
         containers = obj.spec.template.spec.containers
@@ -81,6 +82,7 @@ class AWSProviderManifests(Manifests):
                 label.key: label.value for label in self.kube_control.get_controller_labels()
             } or {"juju-application": self.kube_control.relation.app.name}
             config["cluster-name"] = self.kube_control.get_cluster_tag()
+            config["cluster-cidr"] = self.kube_control.get_cluster_cidr()
 
         config.update(**self.charm_config.available_data)
 
@@ -98,7 +100,7 @@ class AWSProviderManifests(Manifests):
 
     def evaluate(self) -> Optional[str]:
         """Determine if manifest_config can be applied to manifests."""
-        props = ["control-node-selector", "cluster-name"]
+        props = ["control-node-selector", "cluster-name", "cluster-cidr"]
         for prop in props:
             value = self.config.get(prop)
             if not value:

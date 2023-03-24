@@ -1,5 +1,6 @@
 api-endpoints: '["https://10.246.154.7:6443"]'
 cluster-tag: kubernetes-4ypskxahbu3rnfgsds3pksvwe3uh0lxt
+cluster-cidr: 192.168.0.0/16
 cohort-keys: |-
   {
     "cdk-addons": "",

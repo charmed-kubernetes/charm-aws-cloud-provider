@@ -4,4 +4,4 @@ lightkube>=0.10.1,<1.0.0
 jsonschema
 pyyaml
 ops.manifest>=1.1.0,<2.0.0
-git+https://github.com/charmed-kubernetes/interface-kube-control.git@6dd289d1c795fdeda1bed17873b8d6562227c829#subdirectory=ops
+git+https://github.com/charmed-kubernetes/interface-kube-control.git@ca4f8f5aa8db8ff35d4de6ca52effee92d351de7#subdirectory=ops
