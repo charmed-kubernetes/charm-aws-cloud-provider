@@ -138,9 +138,6 @@ spec:
           args:
             - --v=2
             - --cloud-provider=aws
-            - --allocate-node-cidrs=false
-            - --configure-cloud-routes=false
-            - --cluster-name={cluster_tag}
           resources:
             requests:
               cpu: 200m
