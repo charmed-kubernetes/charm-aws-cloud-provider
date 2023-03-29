@@ -138,7 +138,8 @@ spec:
           args:
             - --v=2
             - --cloud-provider=aws
-            - --cluster-cidr={cluster_cidr}
+            - --allocate-node-cidrs=false
+            - --configure-cloud-routes=false
             - --cluster-name={cluster_tag}
           resources:
             requests:
