@@ -5,7 +5,7 @@ display-name: AWS Cloud Provider
 summary: Runs the AWS Cloud Provider in the cluster.
 source: https://github.com/charmed-kubernetes/aws-cloud-provider
 issues: https://bugs.launchpad.net/charm-aws-cloud-provider
-docs: https://discourse.charmhub.io/t/aws-cloud-provider-docs-index/????
+docs: https://discourse.charmhub.io/t/aws-cloud-provider-docs-index/9599
 description: >-
   The aws cloud provider provides the Kubernetes cluster access to
   native resources from aws such as load-balancers
