@@ -16,7 +16,7 @@ can be provided the `aws-integration` relation to the [AWS Integrator charm](htt
 ## Deployment
 
 ### Quickstart
-The AWS Cloud Provider subordinate charm can be deployed alongside Charmed Kubernetes using the overlay provided in the [Charmed Kubernetes bundle repository](https://github.com/charmed-kubernetes/bundle/blob/main/overlays/aws-cloud-overlay.yaml):
+The AWS Cloud Provider subordinate charm can be deployed alongside Charmed Kubernetes using the overlay provided in the [Charmed Kubernetes bundle repository](https://github.com/charmed-kubernetes/bundle/blob/main/overlays/aws-overlay.yaml):
 
 ```bash
 juju deploy charmed-kubernetes --overlay aws-cloud-overlay.yaml
