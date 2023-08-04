@@ -68,6 +68,7 @@ def test_waits_for_certificates(harness):
     rel_cls = type(charm.certificates)
     rel_cls.relation = property(rel_cls.relation.func)
     rel_cls._data = property(rel_cls._data.func)
+    rel_cls._raw_data = property(rel_cls._raw_data.func)
     rel_id = harness.add_relation("certificates", "easyrsa")
     assert isinstance(charm.unit.status, WaitingStatus)
     assert charm.unit.status.message == "Waiting for certificates"
