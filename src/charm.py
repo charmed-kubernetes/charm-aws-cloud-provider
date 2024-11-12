@@ -31,7 +31,7 @@ class AwsCloudProviderCharm(CharmBase):
         super().__init__(*args)
 
         # Relation Validator and datastore
-        self.kube_control = KubeControlRequirer(self)
+        self.kube_control = KubeControlRequirer(self, schemas="0,1")
         self.certificates = CertificatesRequires(self)
         # Config Validator and datastore
         self.charm_config = CharmConfig(self)
@@ -113,7 +113,7 @@ class AwsCloudProviderCharm(CharmBase):
             self.app.status = ActiveStatus(self.collector.long_version)
 
     def _kube_control(self, event):
-        self.kube_control.set_auth_request(self.unit.name)
+        self.kube_control.set_auth_request(self.unit.name, "system:masters")
         return self._merge_config(event)
 
     def _check_kube_control(self, event):
@@ -137,6 +137,10 @@ class AwsCloudProviderCharm(CharmBase):
         return True
 
     def _check_certificates(self, event):
+        if self.kube_control.get_ca_certificate():
+            log.info("CA Certificate is available from kube-control.")
+            return True
+
         self.unit.status = MaintenanceStatus("Evaluating certificates.")
         evaluation = self.certificates.evaluate_relation(event)
         if evaluation:
@@ -192,7 +196,7 @@ class AwsCloudProviderCharm(CharmBase):
                 controller.apply_manifests()
             except ManifestClientError as e:
                 self.unit.status = WaitingStatus("Waiting for kube-apiserver")
-                log.warn(f"Encountered retryable installation error: {e}")
+                log.warning("Encountered retryable installation error: %s", e)
                 event.defer()
                 return False
         return True

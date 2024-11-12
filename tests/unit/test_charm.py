@@ -53,11 +53,20 @@ def kube_control():
         kube_control.get_controller_labels.return_value = []
         kube_control.get_cluster_tag.return_value = "kubernetes-4ypskxahbu3rnfgsds3pksvwe3uh0lxt"
         kube_control.get_cluster_cidr.return_value = ip_network("192.168.0.0/16")
+        kube_control.get_ca_certificate.return_value = None
         kube_control.relation.app.name = "kubernetes-control-plane"
         kube_control.relation.units = [f"kubernetes-control-plane/{_}" for _ in range(2)]
         yield kube_control
 
 
+def test_waits_for_relations(harness):
+    harness.begin_with_initial_hooks()
+    charm = harness.charm
+    assert isinstance(charm.unit.status, BlockedStatus)
+    assert charm.unit.status.message == "Missing required certificates"
+
+
+@pytest.mark.usefixtures("kube_control")
 def test_waits_for_certificates(harness):
     harness.begin_with_initial_hooks()
     charm = harness.charm
@@ -80,8 +89,8 @@ def test_waits_for_certificates(harness):
         "easyrsa/0",
         yaml.safe_load(Path("tests/data/certificates_data.yaml").read_text()),
     )
-    assert isinstance(charm.unit.status, BlockedStatus)
-    assert charm.unit.status.message == "Missing required kube-control relation"
+    assert isinstance(charm.unit.status, MaintenanceStatus)
+    assert charm.unit.status.message == "Deploying AWS Cloud Provider"
 
 
 @mock.patch("ops.interface_kube_control.KubeControlRequirer.create_kubeconfig")
