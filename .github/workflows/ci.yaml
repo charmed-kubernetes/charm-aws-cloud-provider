@@ -15,13 +15,23 @@ jobs:
   lint-unit:
     name: Lint Unit
     uses: charmed-kubernetes/workflows/.github/workflows/lint-unit.yaml@main
-    with:
-      python: "['3.8', '3.10', '3.12']"
     needs: 
       - call-inclusive-naming-check
+    with:
+      python: "['3.8', '3.10', '3.12']"
+
+  charmcraft-channel:
+    runs-on: ubuntu-24.04
+    outputs:
+      channel: ${{ steps.charmcraft.outputs.channel }}
+    steps:
+    - uses: actions/checkout@v4
+    - id: charmcraft
+      run: echo "channel=$(cat .charmcraft-channel)" >> $GITHUB_OUTPUT
 
   charmcraft-build:
     name: Build Charm
+    needs: [charmcraft-channel]
     runs-on: ubuntu-22.04
     steps:
       - name: Check out code
@@ -46,7 +56,7 @@ jobs:
           sudo iptables -P FORWARD ACCEPT
       - name: Install Charmcraft
         run: |
-          sudo snap install charmcraft --classic --channel=latest/stable
+          sudo snap install charmcraft --classic --channel=${{ needs.charmcraft-channel.outputs.channel }}
       - name: Build Charm
         run: |
           sg lxd -c 'charmcraft pack -v'
