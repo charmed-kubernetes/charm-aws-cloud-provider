@@ -1,6 +1,7 @@
 # Copyright 2022 Canonical Ltd.
 # See LICENSE file for licensing details.
 """Implementation of aws specific details of the kubernetes manifests."""
+
 import logging
 import pickle
 from hashlib import md5
@@ -77,7 +78,11 @@ class AWSProviderManifests(Manifests):
             config["image-registry"] = self.kube_control.get_registry_location()
             config["control-node-taints"] = self.kube_control.get_controller_taints() or [
                 Toleration("NoSchedule", "node-role.kubernetes.io/control-plane"),
-                Toleration("NoSchedule", "node.cloudprovider.kubernetes.io/uninitialized", "true"),
+                Toleration(
+                    "NoSchedule",
+                    "node.cloudprovider.kubernetes.io/uninitialized",
+                    "true",
+                ),
             ]  # by default
             config["control-node-selector"] = {
                 label.key: label.value for label in self.kube_control.get_controller_labels()

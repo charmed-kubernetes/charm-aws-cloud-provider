@@ -10,18 +10,18 @@ variable "app_name" {
 variable "base" {
   description = "Ubuntu bases to deploy the charm onto"
   type        = string
-  default     = "ubuntu@22.04"
+  default     = "ubuntu@24.04"
 
   validation {
-    condition     = contains(["ubuntu@20.04", "ubuntu@22.04"], var.base)
-    error_message = "Base must be one of ubuntu@20.04, ubuntu@22.04"
+    condition     = contains(["ubuntu@22.04", "ubuntu@24.04"], var.base)
+    error_message = "Base must be one of ubuntu@22.04, ubuntu@24.04"
   }
 }
 
 variable "channel" {
   description = "The channel to use when deploying a charm."
   type        = string
-  default     = "1.31/stable"
+  default     = "latest/stable"
 }
 
 variable "config" {
