@@ -129,28 +129,28 @@ requires:
     interface: tls-certificates
 
 bases:
-  - build-on:
-    - name: "ubuntu"
-      channel: "22.04"
-      architectures: ["amd64"]
-    run-on:
-    - name: "ubuntu"
-      channel: "24.04"
-      architectures:
-        - amd64
-        - arm64
-    - name: "ubuntu"
-      channel: "24.04"
-      architectures:
-        - amd64
-        - arm64
+- build-on:
+  - name: "ubuntu"
+    channel: "22.04"
+    architectures: ["amd64"]
+  run-on:
+  - name: "ubuntu"
+    channel: "22.04"
+    architectures:
+    - amd64
+    - arm64
+  - name: "ubuntu"
+    channel: "24.04"
+    architectures:
+    - amd64
+    - arm64
 parts:
   charm:
     source: .
     plugin: charm
     override-build: |
       craftctl default
-      git -C $CRAFT_PROJECT_DIR rev-parse --short HEAD > version
+      git -C $CRAFT_PROJECT_DIR rev-parse --short HEAD > $CRAFT_PRIME/version
     build-packages:
     - git
     charm-python-packages:
