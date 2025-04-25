@@ -13,5 +13,4 @@ resource "juju_application" "aws_cloud_provider" {
   }
 
   config       = var.config
-  constraints  = var.constraints
 }
