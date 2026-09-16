@@ -3,7 +3,7 @@
 
 resource "juju_application" "aws_cloud_provider" {
   name         = var.app_name
-  model        = var.model
+  model_uuid   = var.model_uuid
 
   charm {
     name       = "aws-cloud-provider"
